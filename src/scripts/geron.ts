@@ -622,7 +622,7 @@ Object.entries(office).forEach(([keys, values]) => {
 
 // Trello #8
 
-import { seasons } from "./data";
+import { seasons, auto } from "./data";
 
 enum ETitleSeasons{
     winter = 'зимний',
@@ -684,4 +684,69 @@ Object.entries(seasons).forEach(([seasonKey, seasonValues]) =>{
     }
 }) 
 
+
+
+
+// Trello #9
+
+type TParams = {
+    width: number, 
+    height: number, 
+    weight: number
+}
+
+type TDetail = {
+    title:string,
+    params:TParams
+}
+
+type TOptions = {
+    name: string,
+    details: TDetail[],
+    mainEngineer: string,
+    deadline: string
+}
+
+export type TDepartments = {
+    tech: TOptions[],
+    turbo: TOptions[],
+    chemical: TOptions[]
+}
+
+enum EDepName {
+    tech = 'Технический',
+    turbo = 'Турбинный цех',
+    chemical = 'Химический'
+}
+
+const calculateDetailCost = (params:TParams) => {
+    return (params.width * params.height) / params.weight * 150
+}
+
+const calculateProjectBudget = (project: TOptions) => {
+    console.log(project.name);
+
+    let totalProjectCost = 0;
+
+    project.details.forEach((detail) => {
+        const detailCost = calculateDetailCost(detail.params)
+        totalProjectCost += detailCost
+        console.log(`${detail.title} - стоимость детали: ${detailCost}`)
+    })
+
+    console.log(`Общий бюджет на проект: ${totalProjectCost}`);
+    return totalProjectCost
+}
+
+Object.entries(auto).forEach(([departmentName, projects]) => {
+    const depName: EDepName = EDepName[departmentName as EDepName]
+    let totalDepartmentBudget = 0;
+
+    projects.forEach((project) => {
+        const projectBudget = calculateProjectBudget(project);
+        totalDepartmentBudget += projectBudget;
+    });
+
+    console.log(`Название отдела: ${depName} - бюджет на отдел: ${totalDepartmentBudget}`)
+})
 
