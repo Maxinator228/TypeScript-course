@@ -689,7 +689,7 @@ Object.entries(seasons).forEach(([seasonKey, seasonValues]) =>{
 
 // Trello #9
 
-type TParams = {
+interface IParams {
     width: number, 
     height: number, 
     weight: number
@@ -697,7 +697,7 @@ type TParams = {
 
 type TDetail = {
     title:string,
-    params:TParams
+    params:IParams
 }
 
 type TOptions = {
@@ -719,7 +719,7 @@ enum EDepName {
     chemical = 'Химический'
 }
 
-const calculateDetailCost = (params:TParams) => {
+const calculateDetailCost = (params:IParams) => {
     return (params.width * params.height) / params.weight * 150
 }
 
